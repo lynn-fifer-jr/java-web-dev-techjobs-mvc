@@ -56,7 +56,7 @@ public class JobData {
 
         ArrayList<Job> jobs = new ArrayList<>();
 
-        if (value.toLowerCase().equals("all")){
+        if (value.equalsIgnoreCase("all")){
             return findAll();
         }
 
@@ -68,7 +68,7 @@ public class JobData {
 
             String aValue = getFieldValue(job, column);
 
-            if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+            if (aValue != null && aValue.equalsIgnoreCase(value)) {
                 jobs.add(job);
             }
         }

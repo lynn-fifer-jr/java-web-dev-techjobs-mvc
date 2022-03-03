@@ -26,7 +26,7 @@ public class SearchController {
     @RequestMapping(value = "results", method = {RequestMethod.POST})
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
         ArrayList<Job> jobs;
-        if (searchTerm.toLowerCase().equals("all") &&  searchType.equals("all")) {
+        if (searchTerm.equalsIgnoreCase("all") &&  searchType.equals("all")) {
             jobs = JobData.findAll();
             model.addAttribute("title", "All jobs ");
             model.addAttribute("employers", JobData.getAllEmployers());
@@ -40,12 +40,16 @@ public class SearchController {
             model.addAttribute("locations", JobData.getAllLocations());
             model.addAttribute("positions", JobData.getAllPositionTypes());
             model.addAttribute("skills", JobData.getAllCoreCompetency());
+        }else if (searchTerm.isBlank() && !searchType.equals("all")){
+            jobs = JobData.findAll();
+            model.addAttribute("title", "All jobs in " + searchType);
+            model.addAttribute("employers", JobData.getAllEmployers());
+            model.addAttribute("locations", JobData.getAllLocations());
+            model.addAttribute("positions", JobData.getAllPositionTypes());
+            model.addAttribute("skills", JobData.getAllCoreCompetency());
         }else{
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            if (searchTerm.isBlank()){
-                searchTerm = "All";
-            }
-            model.addAttribute("title", "Jobs, by " + searchType + ": " + searchTerm);
+            model.addAttribute("title", "Jobs in category " + searchType + ", by term: " + searchTerm);
             model.addAttribute("employers", JobData.getAllEmployers());
             model.addAttribute("locations", JobData.getAllLocations());
             model.addAttribute("positions", JobData.getAllPositionTypes());
