@@ -23,6 +23,37 @@ public class SearchController {
         return "search";
     }
 
+    @RequestMapping(value = "results", method = {RequestMethod.POST})
+    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
+        ArrayList<Job> jobs;
+        if (searchTerm.toLowerCase().equals("all") &&  searchType.equals("all")) {
+            jobs = JobData.findAll();
+            model.addAttribute("title", "All jobs ");
+            model.addAttribute("employers", JobData.getAllEmployers());
+            model.addAttribute("locations", JobData.getAllLocations());
+            model.addAttribute("positions", JobData.getAllPositionTypes());
+            model.addAttribute("skills", JobData.getAllCoreCompetency());
+        }else if (searchTerm.isBlank() && searchType.equals("all")){
+            jobs = JobData.findAll();
+            model.addAttribute("title", "All jobs ");
+            model.addAttribute("employers", JobData.getAllEmployers());
+            model.addAttribute("locations", JobData.getAllLocations());
+            model.addAttribute("positions", JobData.getAllPositionTypes());
+            model.addAttribute("skills", JobData.getAllCoreCompetency());
+        }else{
+            jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            model.addAttribute("title", "Jobs with " + searchType + ": " + searchTerm);
+            model.addAttribute("employers", JobData.getAllEmployers());
+            model.addAttribute("locations", JobData.getAllLocations());
+            model.addAttribute("positions", JobData.getAllPositionTypes());
+            model.addAttribute("skills", JobData.getAllCoreCompetency());
+        }
+        model.addAttribute("jobs", jobs);
+
+        return "list-jobs";
+
+    }
+
     // TODO #3 - Create a handler to process a search request and render the updated search view.
 
 }
