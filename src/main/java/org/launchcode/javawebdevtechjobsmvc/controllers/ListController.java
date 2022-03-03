@@ -59,6 +59,6 @@ public class ListController {
         }
         model.addAttribute("jobs", jobs);
 
-        return "list-jobs";
+         return "list-jobs";
     }
 }
