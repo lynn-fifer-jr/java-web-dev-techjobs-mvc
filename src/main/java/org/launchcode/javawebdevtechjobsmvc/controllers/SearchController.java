@@ -42,14 +42,16 @@ public class SearchController {
             model.addAttribute("skills", JobData.getAllCoreCompetency());
         }else{
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-            model.addAttribute("title", "Jobs with " + searchType + ": " + searchTerm);
+            if (searchTerm.isBlank()){
+                searchTerm = "All";
+            }
+            model.addAttribute("title", "Jobs, by " + searchType + ": " + searchTerm);
             model.addAttribute("employers", JobData.getAllEmployers());
             model.addAttribute("locations", JobData.getAllLocations());
             model.addAttribute("positions", JobData.getAllPositionTypes());
             model.addAttribute("skills", JobData.getAllCoreCompetency());
         }
         model.addAttribute("jobs", jobs);
-
         return "list-jobs";
 
     }

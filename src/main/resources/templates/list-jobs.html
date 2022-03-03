@@ -8,6 +8,13 @@
 
 <div class="container body-content">
 
+   <ul>
+       <li th:replace="fragments :: search"></li>
+       <li th:replace="fragments :: list"></li>
+   </ul>
+
+
+
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
     <!-- TODO #1 - Use a loop to display job results in a table. -->

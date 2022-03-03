@@ -8,6 +8,10 @@
 
         <div class="container body-content">
             <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+            <ul>
+                <li th:replace="fragments :: search"></li>
+                <li th:replace="fragments :: list"></li>
+            </ul>
             <h2 class = "centered">View Jobs By Category</h2>
         </div>
 
